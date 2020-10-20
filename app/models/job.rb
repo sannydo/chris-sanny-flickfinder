@@ -1,4 +1,4 @@
-class Acting_Job < ActiveRecord::Base
+class Job < ActiveRecord::Base
   belongs_to :movie
   belongs_to :person
  
