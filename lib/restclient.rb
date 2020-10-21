@@ -14,9 +14,12 @@ class ApiClient
   TELLY_URL = URI("https://rapidapi.p.rapidapi.com/idlookup?source=imdb&country=us&source_id=")
   
   @@results = {test: "test"}
-  
+  @@telly_results = {test: "test"}
   def self.results
     @@results
+  end
+  def self.telly_results
+    @@telly_results
   end
   ### INSTANCE DEFINITIONS ###
 
@@ -26,18 +29,43 @@ class ApiClient
     else
       current_results = self.search_imdb(name)
     end
-    temp = current_results["titles"].map do |item|
+    no_images = current_results["titles"].map do |item|
       {
         title: item["title"],
         imdb_id: item["id"]
       }
     end
 
-    temp
+    no_images
   end
 
   def search_people(name)
+    if @@results[name.to_sym] != nil
+      current_results = @@results[name.to_sym]
+    else
+      current_results = self.search_imdb(name)
+    end
+    no_images = current_results["names"].map do |item|
+      {
+        name: item["title"],
+        imdb_id: item["id"]
+      }
+    end
 
+    no_images
+  end
+
+  def search_platforms(imdb_id)
+    if @@telly_results[imdb_id.to_sym] != nil
+      current_results = @@telly_results[imdb_id.to_sym]
+    else
+      current_results = self.get_platforms(imdb_id)
+    end
+    current_results["collection"]["locations"].map do |item|
+      {
+        platform: item["display_name"]
+      }
+    end
   end
 
   def search_imdb(name)
@@ -61,7 +89,9 @@ class ApiClient
   def get_platforms(imdb_id)
     parameter = imdb_id.downcase.tr(" ", "_")
     url = URI("https://rapidapi.p.rapidapi.com/idlookup?source=imdb&country=us&source_id=#{parameter}")
-    return make_telly_request(url)
+    results = make_telly_request(url)
+    self.class.telly_results[imdb_id.to_sym] = results
+    results
   end
 
   private
