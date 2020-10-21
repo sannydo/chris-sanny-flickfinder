@@ -13,22 +13,44 @@ class ApiClient
   IMDB_SEARCH_URL = URI("https://rapidapi.p.rapidapi.com/search/") # + "%{name_to_Search}"
   TELLY_URL = URI("https://rapidapi.p.rapidapi.com/idlookup?source=imdb&country=us&source_id=")
   
-
+  @@results = {test: "test"}
+  
+  def self.results
+    @@results
+  end
   ### INSTANCE DEFINITIONS ###
 
+  def search_movies(name)
+    if @@results[name.to_sym] != nil
+      current_results = @@results[name.to_sym]
+      puts 45
+    else
+      current_results = self.search_imdb(name)
+      puts 46
+    end
+    current_results[titles]
+  end
+
+  def search_people(name)
+
+  end
 
   def search_imdb(name)
     parameter = name.downcase.tr(" ", "_")
     url = IMDB_SEARCH_URL + URI("#{parameter}")
     puts url
-    return make_imdb_request(url)
+    results = make_imdb_request(url)
+    self.class.results[name.to_sym] = results
+    results
   end
   
   def get_film(imdb_id)
     parameter = imdb_id.downcase.tr(" ", "_")
     url = IMDB_FILM_URL + URI("#{parameter}")
     puts url
-    return make_imdb_request(url)
+    results = make_imdb_request(url)
+    self.class.results[imdb_id.to_sym] = results
+    results
   end
 
   def get_platforms(imdb_id)
@@ -77,5 +99,5 @@ end
 
 r = ApiClient.new()
 #puts r.search_imdb("The Avengers")
- puts r.get_film("tt0848228")
-puts r.get_platforms("tt0848228")
+ #puts r.get_film("tt0848228")
+# puts r.get_platforms("tt0848228")
