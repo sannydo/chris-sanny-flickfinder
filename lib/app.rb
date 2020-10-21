@@ -22,7 +22,6 @@ class Prompt
     def input
         puts "Please type the title of the movie or the actor/actress's name:
         answer = gets.chomp
-        
     end
 
     def exit
