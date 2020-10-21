@@ -23,10 +23,8 @@ class ApiClient
   def search_movies(name)
     if @@results[name.to_sym] != nil
       current_results = @@results[name.to_sym]
-      puts 45
     else
       current_results = self.search_imdb(name)
-      puts 46
     end
     temp = current_results["titles"].map do |item|
       {
