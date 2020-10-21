@@ -28,7 +28,14 @@ class ApiClient
       current_results = self.search_imdb(name)
       puts 46
     end
-    current_results[titles]
+    temp = current_results["titles"].map do |item|
+      {
+        title: item["title"],
+        imdb_id: item["id"]
+      }
+    end
+
+    temp
   end
 
   def search_people(name)

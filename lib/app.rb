@@ -20,7 +20,7 @@ class Prompt
     #after they select the value, ask user to type which movie or actress
 
     def input
-        puts "Please type the title of the movie or the actor/actress's name:
+        puts "Please type the title of the movie or the actor/actress's name:"
         answer = gets.chomp
     end
 
