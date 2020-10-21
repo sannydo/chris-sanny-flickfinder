@@ -5,6 +5,8 @@ require 'tty-prompt'
 
 class Prompt
 
+    @@prompt = TTY::Prompt.new
+
 
     def welcome_user
         puts "Welcome to Flick Finder"
@@ -12,8 +14,8 @@ class Prompt
 
     def ask_for_input
 
-        prompt = TTY::Prompt.new
-        value = prompt.select("Choose from the following choices (using the ↑/↓ arrow keys): ", %w(Actor/Actress Movies))
+        
+        value = @@prompt.select("Choose from the following choices (using the ↑/↓ arrow keys): ", %w(Actor/Actress Movies))
         return value
     end
 
