@@ -4,7 +4,7 @@ require 'openssl'
 require 'json'
 require 'pry'
 
-class RestClient
+class ApiClient
 
   ### CLASS DEFINITIONS ###
 
@@ -33,7 +33,7 @@ class RestClient
 
   def get_platforms(imdb_id)
     parameter = imdb_id.downcase.tr(" ", "_")
-    url = TELLY_URL + "#{parameter}"
+    url = URI("https://rapidapi.p.rapidapi.com/idlookup?source=imdb&country=us&source_id=#{parameter}")
     return make_telly_request(url)
   end
 
@@ -75,7 +75,7 @@ class RestClient
 
 end
 
-r = RestClient.new()
+r = ApiClient.new()
 #puts r.search_imdb("The Avengers")
  puts r.get_film("tt0848228")
-
+puts r.get_platforms("tt0848228")
