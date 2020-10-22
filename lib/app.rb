@@ -40,17 +40,7 @@ class Prompt
         #binding.pry
         value = @@prompt.select("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nChoose a favorite to remove it or exit to go back", temp_array)
         if value == "Add to your Favorites"
-            choice1 = people_or_movie()
-            if choice1 == "Actor/Actress"
-                puts "Enter name of Actress/Actor (full name preferred)"
-                name = STDIN.gets.chomp()
-                list = api.search_people(name)
-                choice2 = @@prompt.select("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nChoose from the list of names", list[:name] )
-                choice2
-
-            elsif choice1 == "Movies"
-            
-            end
+            self.add_fav()
         end
        
     end
@@ -74,8 +64,20 @@ class Prompt
     end
 
     def add_fav
-        #selection in an array like ask_for_input
-        puts "E"
+        api = ApiClient2.new()
+        choice1 = people_or_movie()
+        if choice1 == "Actor/Actress"
+            puts "Enter name of Actress/Actor (full name preferred)"
+            name = STDIN.gets.chomp()
+            hash = api.search_people(name)
+            choice2 = @@prompt.select("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nChoose from the list of names", hash[:name] )
+            puts choice2 #=> "Brad Pitt"
+            Person.create(name: hash[:name], imdbd_id: hash[:id])
+            Person.find(hash[:id])
+
+        elsif choice1 == "Movies"
+        
+        end
     end
 
     def exit
