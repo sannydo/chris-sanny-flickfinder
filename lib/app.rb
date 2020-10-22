@@ -17,20 +17,29 @@ class Prompt
         return value
     end
 
-    #after they select the value, ask user to type which movie or actress
+    def favorite
+        #delete, add new, go back
+    end
 
     def name_of_movie
         puts "Please type the name of the movie: "
         title = @@prompt.ask
-        a = ApiClient.new()
+        a = ApiClient2.new()
         a.search_movies("#{title}")
     end
+
+    
 
     def name_of_actor
         puts "Please type the name of the actor/actress: "
         name = @@prompt.ask
-        a = ApiClient.new()
+        a = ApiClient2.new()
         a.search_people("#{name}")
+    end
+
+    def add_fav
+        #selection in an array like ask_for_input
+        puts ""
     end
 
     def exit
