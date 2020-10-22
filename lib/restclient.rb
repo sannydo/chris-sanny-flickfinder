@@ -86,13 +86,7 @@ class ApiClient
     results
   end
 
-  def get_platforms(imdb_id)
-    parameter = imdb_id.downcase.tr(" ", "_")
-    url = URI("https://rapidapi.p.rapidapi.com/idlookup?source=imdb&country=us&source_id=#{parameter}")
-    results = make_telly_request(url)
-    self.class.telly_results[imdb_id.to_sym] = results
-    results
-  end
+  
 
   private
 
