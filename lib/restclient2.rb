@@ -72,19 +72,12 @@ class ApiClient2
     raw_results.instance_variables.each {|var| hash[var.to_s.delete("@")] = raw_results.instance_variable_get(var) }
     hash2 = {}
     # Strip down the hash again to the object
-    item = hash["table"][:results][0]
-    # Map this object to another hash
-    item.instance_variables.each {|var| hash2[var.to_s.delete("@")] = raw_results.instance_variable_get(var) }
-    item = hash2["table"][:results]
-    item.map! do |item|
+    object = hash["table"][:results][0]
       {
-        name: item.instance_variable_get("@table")[:name],
-        id: item.instance_variable_get("@table")[:id]
+        name: object.instance_variable_get("@table")[:name],
+        id: object.instance_variable_get("@table")[:id]
  
       }
-
-    end
-    item
   end
 
   def get_platforms(tmdb_id)
