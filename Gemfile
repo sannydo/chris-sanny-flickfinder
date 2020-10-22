@@ -11,3 +11,4 @@ gem "unirest", "~> 1.1"
 gem "tty-prompt"
 # , "~> 0.22.0"
 gem "colorize"
+gem 'themoviedb-api'
