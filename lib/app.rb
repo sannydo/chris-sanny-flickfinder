@@ -190,7 +190,7 @@ class Prompt
                 if item[:title] == nil
                     next
                 end
-                    binding.pry
+                    #binding.pry
                     movie = Movie.new()
                     movie.name = item[:title]
                     movie.imdb_id = item[:id]
