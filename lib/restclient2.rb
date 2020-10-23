@@ -11,6 +11,11 @@ class ApiClient2
   def search_movies(name)
         # Store the raw results from the api 
         raw_results = Tmdb::Search.movie(name)
+
+        if raw_results.instance_variable_get("@table")[:results][0]==nil
+          return nil
+        end
+        
         hash = {}
         # Strip the object of the attributes and put it into a hash
         raw_results.instance_variables.each {|var| hash[var.to_s.delete("@")] = raw_results.instance_variable_get(var) }
@@ -86,6 +91,11 @@ class ApiClient2
   def search_people(name)
     # Store the raw results from the api 
     raw_results = Tmdb::Search.person(name)
+    #binding.pry
+    if raw_results.instance_variable_get("@table")[:results][0]==nil
+      return nil
+    end
+    
     hash = {}
     # Strip the object of the attributes and put it into a hash
     raw_results.instance_variables.each {|var| hash[var.to_s.delete("@")] = raw_results.instance_variable_get(var) }
@@ -124,7 +134,7 @@ class ApiClient2
 
   def get_platforms(tmdb_id)
     #puts "Getting #{tmdb_id} from Utelly!"
-    print '#'
+    print '###'
     parameter = tmdb_id.downcase.tr(" ", "_")
     url = URI("https://rapidapi.p.rapidapi.com/idlookup?source=tmdb&country=us&source_id=movie/#{parameter}")
     results = make_telly_request(url)

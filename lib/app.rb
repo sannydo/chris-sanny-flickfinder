@@ -32,9 +32,11 @@ class Prompt
         Favorite.all.each{|item| temp_array << item}
         temp_array.map! do |item|
             {
-                name: item.name,
-                id: item.imdb_id,
-                object: item
+                item.name => {
+                    name: item.name,
+                    id: item.imdb_id,
+                    object: item
+                }
             }
         end
         temp_array << "Exit"
@@ -46,7 +48,17 @@ class Prompt
         elsif value == "Exit"
             return nil
         else
-
+            ##binding.pry
+            if value[:object].class == Favorite 
+                Favorite.delete( value[:object].id() )
+            else
+                job_ids = value[:object].jobs.map {|job| job.id()}
+                movie_ids = value[:object].movies.map {|movie| movie.id()}
+                ##binding.pry
+                Job.delete(job_ids)
+                Movie.delete(movie_ids)
+                Person.delete(value[:object].id())
+            end
         end
        
     end
@@ -128,6 +140,11 @@ class Prompt
             # puts "Enter name of Actress/Actor (full name preferred)"
             name = STDIN.gets.chomp()
             hash = api.search_people(name)
+            if hash == nil
+                puts "Actor Not Found"
+                @@prompt.select("", %w(Exit))
+                return nil
+            end
             choice2 = @@prompt.select("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nChoose from the list of names", hash[:name] )
             person = Person.new()
             person.name = hash[:name]
@@ -151,6 +168,11 @@ class Prompt
                 puts "Enter name of Movie (full name preferred)"
                 name = STDIN.gets.chomp()
                 list_hashes = api.search_movies(name)
+                if list_hashes == nil
+                    puts "Movie Not Found"
+                    @@prompt.select("", %w(Exit))
+                    return nil
+                end
                 hash = {}
                 list_hashes.each do |movie|
                     hash[movie[:name]] = movie[:id]
