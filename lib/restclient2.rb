@@ -123,7 +123,8 @@ class ApiClient2
   end
 
   def get_platforms(tmdb_id)
-    puts "Getting #{tmdb_id} from Utelly!"
+    #puts "Getting #{tmdb_id} from Utelly!"
+    print '#'
     parameter = tmdb_id.downcase.tr(" ", "_")
     url = URI("https://rapidapi.p.rapidapi.com/idlookup?source=tmdb&country=us&source_id=movie/#{parameter}")
     results = make_telly_request(url)
@@ -139,7 +140,7 @@ class ApiClient2
         
       end
     end
-    puts "results: #{propper_results}"
+    #puts "results: #{propper_results}"
     propper_results
   end
 

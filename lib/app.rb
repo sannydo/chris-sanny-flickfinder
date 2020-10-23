@@ -33,7 +33,8 @@ class Prompt
         temp_array.map! do |item|
             {
                 name: item.name,
-                id: item.imdb_id
+                id: item.imdb_id,
+                object: item
             }
         end
         temp_array << "Exit"
@@ -42,6 +43,10 @@ class Prompt
         value = @@prompt.select("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nChoose a favorite to remove it or exit to go back", temp_array)
         if value == "Add to your Favorites"
             add_fav()
+        elsif value == "Exit"
+            return nil
+        else
+
         end
        
     end
@@ -86,25 +91,26 @@ class Prompt
         just_favorite_movies.each do |hash|
             hash[:platforms] = api.get_platforms(hash[:imdb_id])
         end
-        puts "Heres Where to watch your favorite movies"
+        puts "\nHeres Where to watch your favorite movies"
         
         just_favorite_movies.each do |movie|
             puts "#{movie[:name]}"
             movie[:platforms].each do |item|
-                puts item[:platform]
+                puts "\t#{item[:platform]}"
             end
         end
         puts "And heres where you can watch some movies your favorite actors are known for"
         previous = "placeholder"
         favorite_actor_movies.each do |movie|
             person = movie[:person][0]
-            puts person.name() if previous == movie[:person][0]
-            puts "#{movie[:name]}"
+            puts person.name() if previous != movie[:person][0]
+            puts "\t#{movie[:name]}"
             movie[:platforms].each do |item|
-                puts "\t #{item[:platform]}"
+                puts "\t\t #{item[:platform]}"
             end
             previous = movie[:person][0]
         end
+        @@prompt.select("", %w(Exit))
     end
 
     def name_of_actor
