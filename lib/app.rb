@@ -10,18 +10,38 @@ class Prompt
     
 
     def welcome_user
-        puts "Welcome to Flick Finder"
+        puts" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n "
+        thing ="\t   ───▄▀▀▀▄▄▄▄▄▄▄▀▀▀▄───  \n" +
+      "\t   ───█▒▒░░░░░░░░░▒▒█─── \n" +  
+      "\t   ────█░░█░░░░░█░░█──── \n" +  
+      "\t   ─▄▄──█░░░▀█▀░░░█──▄▄─ \n" +  
+      "\t   █░░█─▀▄░░░░░░░▄▀─█░░█ \n" +  
+      "\t   █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█ \n" +  
+      "\t   █░░╦─╦╔╗╦─╔╗╔╗╔╦╗╔╗░░█ \n" +  
+      "\t   █░░║║║╠─║─║─║║║║║╠─░░█ \n" +  
+      "\t   █░░╚╩╝╚╝╚╝╚╝╚╝╩─╩╚╝░░█ \n" +
+      "\t   █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█ \n" 
+        
+        puts thing
+        puts"\n\tT O   F L I X   F I N D E R"
+        puts"\t            B Y"
+        puts "\t      CHRIS AND SANNY\n\n"
     end
-
+    @@count = 0
     def main_menu
         main_menu_options =["Go to Favorites", "Find where to Watch Favorites", "Exit"]
-        @@prompt.select("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHi, welcome to the main menu. Please select from the following list below:", main_menu_options)
+        puts "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" if @@count != 0
+        puts "   ＼ʕ •ᴥ•ʔ＼ FLICKS   FINDER ／ʕ •ᴥ•ʔ／"
+        @@count += 1
+        @@prompt.select("Hi, welcome to the main menu. Please select from the following list below:", main_menu_options)
     end
+    
 
     def people_or_movie
-        value = @@prompt.select("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nChoose from the following choices (using the ↑/↓ arrow keys): ", %w(Actor/Actress Movies))
+        value = @@prompt.select("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nChoose from the following choices (using the ↑/↓ arrow keys): ", %w(Actor/Actress Movies))
         return value
     end
+    
 
     def favorite_menu
         #delete, add new, go back
@@ -42,7 +62,7 @@ class Prompt
         temp_array << "Exit"
         temp_array.unshift("Add to your Favorites")
         #binding.pry
-        value = @@prompt.select("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nChoose a favorite to remove it or exit to go back", temp_array)
+        value = @@prompt.select("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nChoose a favorite to remove it or exit to go back", temp_array)
         if value == "Add to your Favorites"
             add_fav()
         elsif value == "Exit"
@@ -73,6 +93,7 @@ class Prompt
 
     
     def where_to_watch()
+        puts "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
         api = ApiClient2.new()
         favorite_actor_movies = []
         just_favorite_movies = []
@@ -103,24 +124,38 @@ class Prompt
         just_favorite_movies.each do |hash|
             hash[:platforms] = api.get_platforms(hash[:imdb_id])
         end
-        puts "\nHeres Where to watch your favorite movies"
+        puts "\nHeres Where to watch your favorite movies\n\n"
         
         just_favorite_movies.each do |movie|
             puts "#{movie[:name]}"
-            movie[:platforms].each do |item|
-                puts "\t#{item[:platform]}"
+            if movie[:platforms] == nil
+                puts "\tNo platform found"
+                #puts "#{movie}"
+            else
+            
+                movie[:platforms].each do |item|
+                    puts "\t#{item[:platform]}"
+                end
+                
             end
         end
-        puts "And heres where you can watch some movies your favorite actors are known for"
+        puts "\nAnd heres where you can watch some movies your favorite actors are known for\n\n"
         previous = "placeholder"
         favorite_actor_movies.each do |movie|
             person = movie[:person][0]
+            
             puts person.name() if previous != movie[:person][0]
             puts "\t#{movie[:name]}"
-            movie[:platforms].each do |item|
-                puts "\t\t #{item[:platform]}"
+            if movie[:platforms] == nil
+                puts "\t\tNo Platforms found"
+                previous = movie[:person][0]
+            else
+                movie[:platforms].each do |item|
+                    puts "\t\t #{item[:platform]}"
+                end
+                previous = movie[:person][0]
             end
-            previous = movie[:person][0]
+            
         end
         @@prompt.select("", %w(Exit))
     end
@@ -135,9 +170,10 @@ class Prompt
 
     def add_fav
         api = ApiClient2.new()
+        # Ask if they want to add a favorite actor or movie
         choice1 = people_or_movie()
         if choice1 == "Actor/Actress"
-            # puts "Enter name of Actress/Actor (full name preferred)"
+            puts "Enter name of Actress/Actor (full name required)"
             name = STDIN.gets.chomp()
             hash = api.search_people(name)
             if hash == nil
@@ -145,27 +181,32 @@ class Prompt
                 @@prompt.select("", %w(Exit))
                 return nil
             end
-            choice2 = @@prompt.select("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nChoose from the list of names", hash[:name] )
+            choice2 = @@prompt.select("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nChoose from the list of names", hash[:name] )
             person = Person.new()
             person.name = hash[:name]
             person.imdb_id = hash[:id]
             person.save()
             api.get_known_for(hash[:name]).each do |item| #=> [ {title: "fightclub", id: 1233424 }, {} ]
-                movie = Movie.new()
-                movie.name = item[:title]
-                movie.imdb_id = item[:id]
-                movie.save
-                job = Job.new()
-                job.movie_id = movie.id()
-                job.person_id = person.id()
-                job.save
-                # binding.pry
+                if item[:title] == nil
+                    next
+                end
+                    binding.pry
+                    movie = Movie.new()
+                    movie.name = item[:title]
+                    movie.imdb_id = item[:id]
+                    movie.save
+                    job = Job.new()
+                    job.movie_id = movie.id()
+                    job.person_id = person.id()
+                    job.save
+                    # binding.pry
+                
             end
             
             final_choice = person.name
             # puts Movie.all
         elsif choice1 == "Movies"
-                puts "Enter name of Movie (full name preferred)"
+                puts "Enter name of Movie (full name required)"
                 name = STDIN.gets.chomp()
                 list_hashes = api.search_movies(name)
                 if list_hashes == nil
@@ -180,7 +221,7 @@ class Prompt
                 # By default the choice name is also the value the prompt will 
                 # return when selected. To provide custom values, you can provide 
                 # a hash with keys as choice names and their respective values:
-                choice2 = @@prompt.enum_select("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nChoose from the list of names", hash )
+                choice2 = @@prompt.enum_select("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nChoose from the list of names", hash )
                 movie_hash = list_hashes.select do |item|
                     item[:id] == choice2
                 end

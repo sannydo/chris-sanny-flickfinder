@@ -2,11 +2,15 @@ require 'uri'
 require 'net/http'
 require 'openssl'
 require 'json'
-Tmdb::Api.key("60c89cdae03d5ddece4011df5beca5e2")
 
 
-### CHRIS KEY 60c89cdae03d5ddece4011df5beca5e2
+
+# Api Client v2 that was developed to interface with The Movie Database api
+# as well as the Utelly API through a platform called RapidApi
 class ApiClient2
+
+  Tmdb::Api.key("60c89cdae03d5ddece4011df5beca5e2")
+  ### CHRIS KEY 60c89cdae03d5ddece4011df5beca5e2
 
   def search_movies(name)
         # Store the raw results from the api 
@@ -15,7 +19,7 @@ class ApiClient2
         if raw_results.instance_variable_get("@table")[:results][0]==nil
           return nil
         end
-        
+
         hash = {}
         # Strip the object of the attributes and put it into a hash
         raw_results.instance_variables.each {|var| hash[var.to_s.delete("@")] = raw_results.instance_variable_get(var) }
@@ -127,7 +131,7 @@ class ApiClient2
         
       end
     end
-    binding.pry
+    # binding.pry
     puts "results: #{stuff}"
     stuff
   end
@@ -163,7 +167,7 @@ class ApiClient2
 
     request = Net::HTTP::Get.new(url)
     request["x-rapidapi-host"] = 'utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com'
-    request["x-rapidapi-key"] = '9d6d64d48dmsh56a7cd3df5b315ap180b67jsn5f6aa34f0119'
+    request["x-rapidapi-key"] = '876a9d03aamsh83390dd5c6d0f21p1a6f93jsn007c7c139bbc'
     ### SANNY KEY 876a9d03aamsh83390dd5c6d0f21p1a6f93jsn007c7c139bbc
     ### CHRIS KEY 9d6d64d48dmsh56a7cd3df5b315ap180b67jsn5f6aa34f0119
     response = http.request(request)
