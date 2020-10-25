@@ -3,37 +3,77 @@ require 'pry'
 # require 'json'
 require 'tty-prompt'
 
+# The purpose of this file is to contain the main logic of the app
+# Implements ApiClient from apiclient.rb
+# Implements TTY, a set of gems for controlling the terminal
+
 class Prompt
 
-    
+    ### GENERAL FUNCTIONS ###
+
+    # Create a class variable storing the TTY::Prompt object
+    #   So it can be reused
     @@prompt = TTY::Prompt.new
     
-
+    # Create a class variable storing the Pastel object
+    #   So it can be reused
+    @@pastel = pastel = Pastel.new
+    
+    # Displays the welcome logo to the user
+    # Returns nil
     def welcome_user
-        puts" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n "
-        thing ="\t   ───▄▀▀▀▄▄▄▄▄▄▄▀▀▀▄───  \n" +
-      "\t   ───█▒▒░░░░░░░░░▒▒█─── \n" +  
-      "\t   ────█░░█░░░░░█░░█──── \n" +  
-      "\t   ─▄▄──█░░░▀█▀░░░█──▄▄─ \n" +  
-      "\t   █░░█─▀▄░░░░░░░▄▀─█░░█ \n" +  
-      "\t   █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█ \n" +  
-      "\t   █░░╦─╦╔╗╦─╔╗╔╗╔╦╗╔╗░░█ \n" +  
-      "\t   █░░║║║╠─║─║─║║║║║╠─░░█ \n" +  
-      "\t   █░░╚╩╝╚╝╚╝╚╝╚╝╩─╩╚╝░░█ \n" +
-      "\t   █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█ \n" 
+
+        # put some new lines just in case
+        puts "\n\n\n\n\n\n\n\n\n\n\n\n"
+        # Clears the terminal for the next text
+        Gem.win_platform? ? (system "cls") : (system "clear")
         
-        puts thing
-        puts"\n\tT O   F L I X   F I N D E R"
-        puts"\t            B Y"
-        puts "\t      CHRIS AND SANNY\n\n"
+        # Display a welcoming logo
+        welcome_logo = "\t   ───▄▀▀▀▄▄▄▄▄▄▄▀▀▀▄───  \n" +
+                       "\t   ───█▒▒░░░░░░░░░▒▒█───  \n" +  
+                       "\t   ────█░░█░░░░░█░░█────  \n" +  
+                       "\t   ─▄▄──█░░░▀█▀░░░█──▄▄─  \n" +  
+                       "\t   █░░█─▀▄░░░░░░░▄▀─█░░█  \n" +  
+                       "\t   █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█ \n" +  
+                       "\t   █░░╦─╦╔╗╦─╔╗╔╗╔╦╗╔╗░░█ \n" +  
+                       "\t   █░░║║║╠─║─║─║║║║║╠─░░█ \n" +  
+                       "\t   █░░╚╩╝╚╝╚╝╚╝╚╝╩─╩╚╝░░█ \n" +
+                       "\t   █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█ \n" 
+        # Print the logo in blue
+        puts @@pastel.blue(welcome_logo)
+        # Print the credits in cyan
+        puts @@pastel.cyan("\tT O   F L I X   F I N D E R") 
+        puts @@pastel.cyan("\t            B Y")
+        puts @@pastel.cyan("\t      CHRIS AND SANNY\n\n")
     end
-    @@count = 0
+    
+
+
+    # Method to display the main menu options and get feed back from the user on
+    #   where they want to navigate to
+    # Returns the choice of the user representing where they want to navigate to 
+    @@count = 0 # Class variable to track number of times the main menu function has run
     def main_menu
-        main_menu_options =["Go to Favorites", "Find where to Watch Favorites", "Exit"]
-        puts "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" if @@count != 0
-        puts "   ＼ʕ •ᴥ•ʔ＼ FLICKS   FINDER ／ʕ •ᴥ•ʔ／"
+        
+        # Clears the terminal and displays the mini-logo if it 
+        #   is not the first time calling main_menu (welcome logo not displayed)
+        mini_logo = "   ＼ʕ •ᴥ•ʔ＼ FLICKS   FINDER ／ʕ •ᴥ•ʔ／"
+        if @@count != 0
+            
+            Gem.win_platform? ? (system "cls") : (system "clear")
+            puts @@pastel.blue(mini_logo)
+        end
+        # Increase the count by one for each time the menu is displayed. 
+        # Used to determine wheter to clear the screen and show the mini logo
         @@count += 1
-        @@prompt.select("Hi, welcome to the main menu. Please select from the following list below:", main_menu_options)
+        
+        # The list of options that the user can choose from when deciding where to navigate to 
+        main_menu_options =["Go to Favorites", "Find where to Watch Favorites", "Exit"]
+        
+        
+        # Prompt (ask) the user which option they would like to select adn returns the value they select
+        @@prompt.select("Hi, welcome to the main menu." + 
+            " Please select from the following list below:", main_menu_options)
     end
     
 
@@ -45,8 +85,8 @@ class Prompt
 
     def favorite_menu
         #delete, add new, go back
-        # TODO Add remove functionality
-        api = ApiClient2.new()
+        
+        api = ApiClient.new()
         temp_array = []
         Person.all.each{|item| temp_array << item}
         Favorite.all.each{|item| temp_array << item}
@@ -84,7 +124,7 @@ class Prompt
     end
 
     def name_of_movie
-        api = ApiClient2.new()
+        api = ApiClient.new()
         puts "Please type the name of the movie: "
         title = @@prompt.ask
         
@@ -94,7 +134,7 @@ class Prompt
     
     def where_to_watch()
         puts "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-        api = ApiClient2.new()
+        api = ApiClient.new()
         favorite_actor_movies = []
         just_favorite_movies = []
         Movie.all.each{ |item| favorite_actor_movies << item}
@@ -161,7 +201,7 @@ class Prompt
     end
 
     def name_of_actor
-        api = ApiClient2.new()
+        api = ApiClient.new()
         puts "Please type the name of the actor/actress: "
         name = @@prompt.ask
         
@@ -169,7 +209,7 @@ class Prompt
     end
 
     def add_fav
-        api = ApiClient2.new()
+        api = ApiClient.new()
         # Ask if they want to add a favorite actor or movie
         choice1 = people_or_movie()
         if choice1 == "Actor/Actress"
@@ -235,8 +275,35 @@ class Prompt
         puts "The Actor/Actress/Movie #{final_choice} was saved!"
     end
 
+    # Presents the logout logo to the user 
     def logout
+      
+        # Clears the terminal for the next text
+        Gem.win_platform? ? (system "cls") : (system "clear")
+
+        # Display logo
+        puts '
+        _______  _______  _______  ______     ______            _______ 
+        (  ____ \(  ___  )(  ___  )(  __  \   (  ___ \ |\     /|(  ____ \
+        | (    \/| (   ) || (   ) || (  \  )  | (   ) )( \   / )| (    \/
+        | |      | |   | || |   | || |   ) |  | (__/ /  \ (_) / | (__    
+        | | ____ | |   | || |   | || |   | |  |  __ (    \   /  |  __)   
+        | | \_  )| |   | || |   | || |   ) |  | (  \ \    ) (   | (      
+        | (___) || (___) || (___) || (__/  )  | )___) )   | |   | (____/\
+        (_______)(_______)(_______)(______/   |/ \___/    \_/   (_______/
+                                                                         
+        '
+        # Friendly goodbye message
         puts "Thank you for using Flick Finder!"
+
     end
 
+    #### UTILITY FUNCTIONS ####
+    # Functions that help the rest of the program run
+
+    # Clears the terminal
+    def clear
+        Gem.win_platform? ? (system "cls") : (system "clear")
+    end
+    
 end

@@ -6,12 +6,17 @@ require 'json'
 
 
 # Api Client v2 that was developed to interface with The Movie Database api
-# as well as the Utelly API through a platform called RapidApi
-class ApiClient2
+# as well as the Utelly API through the RapidApi Platform
 
-  Tmdb::Api.key("60c89cdae03d5ddece4011df5beca5e2")
+class ApiClient
+
+  Tmdb::Api.key(" 60c89cdae03d5ddece4011df5beca5e2")
   ### CHRIS KEY 60c89cdae03d5ddece4011df5beca5e2
 
+
+  # Searches the TMDB api for movie titles
+  # Takes a string of the exact name of the movie the user wants to find
+  # Returns a list of movies similiar to the search and their corresponding tmdb_id
   def search_movies(name)
         # Store the raw results from the api 
         raw_results = Tmdb::Search.movie(name)
@@ -167,7 +172,7 @@ class ApiClient2
 
     request = Net::HTTP::Get.new(url)
     request["x-rapidapi-host"] = 'utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com'
-    request["x-rapidapi-key"] = '876a9d03aamsh83390dd5c6d0f21p1a6f93jsn007c7c139bbc'
+    request["x-rapidapi-key"] = '9d6d64d48dmsh56a7cd3df5b315ap180b67jsn5f6aa34f0119'
     ### SANNY KEY 876a9d03aamsh83390dd5c6d0f21p1a6f93jsn007c7c139bbc
     ### CHRIS KEY 9d6d64d48dmsh56a7cd3df5b315ap180b67jsn5f6aa34f0119
     response = http.request(request)
