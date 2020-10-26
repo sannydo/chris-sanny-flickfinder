@@ -1,3 +1,1 @@
-class Favorite < ActiveRecord::Base
-
-end
+class Favorite < ActiveRecord::Base; end

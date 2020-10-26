@@ -13,3 +13,5 @@ gem "tty-prompt"
 gem 'themoviedb-api'
 gem "tty-box"
 gem "pastel"
+
+gem "prettier", "~> 0.20.1"

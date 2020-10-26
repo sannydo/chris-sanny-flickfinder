@@ -11,33 +11,31 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2020_10_20_190323) do
-
-  create_table "favorites", force: :cascade do |t|
-    t.string "name"
-    t.string "imdb_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'favorites', force: :cascade do |t|
+    t.string 'name'
+    t.string 'imdb_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "jobs", force: :cascade do |t|
-    t.integer "person_id"
-    t.integer "movie_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table 'jobs', force: :cascade do |t|
+    t.integer 'person_id'
+    t.integer 'movie_id'
+    t.datetime 'created_at'
+    t.datetime 'updated_at'
   end
 
-  create_table "movies", force: :cascade do |t|
-    t.string "name"
-    t.string "imdb_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'movies', force: :cascade do |t|
+    t.string 'name'
+    t.string 'imdb_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "people", force: :cascade do |t|
-    t.string "name"
-    t.string "imdb_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'people', force: :cascade do |t|
+    t.string 'name'
+    t.string 'imdb_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
-
 end
